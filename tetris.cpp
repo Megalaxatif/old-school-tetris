@@ -122,7 +122,7 @@ Tetris::Tetris(HANDLE console_) : board{ 0 }, current_tetramino{ 0 }, random_ind
     board_heigth = 22;
     board_length = 12;
     tetris_logo_posx = 5;
-    tetris_logo_posy = 1;
+    tetris_logo_posy = 0;
     tetris_logo_length = 56;
     tetris_logo_heigth = 5;
     board_posx = tetris_logo_length/2 - board_length + tetris_logo_posx; // on centre le tableau sur le logo tetris
@@ -167,6 +167,7 @@ Tetris::Tetris(HANDLE console_) : board{ 0 }, current_tetramino{ 0 }, random_ind
     display_counter(0, &score, score_text_posx + score_text_length, score_text_posy);
     display_counter(0, &level, level_text_posx + level_text_length, level_text_posy);
     display_broken_line_counter();
+    display_command_info();
 }
 const void Tetris::goto_(int x, int y) {
     COORD coord;
@@ -241,6 +242,10 @@ const void Tetris::display_next_tetramino_board() {
             WriteConsole(console, ANSI_code[8], 14, NULL, NULL);
         }
     }
+}
+const void Tetris::display_command_info() {
+    goto_(tetris_logo_posx, tetris_logo_posy + tetris_logo_heigth + board_heigth + 2);
+    WriteConsole(console, L"Move with ← ↓ →    Rotate with ↑    Switch pause/playing with entry    Set the piece down with the space bar", 108, NULL, NULL);
 }
 const void Tetris::display_board(){
     for (int y = 0; y < board_heigth; y++) {

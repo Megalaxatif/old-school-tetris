@@ -13,6 +13,7 @@ class Tetris {
 public:
 	Tetris(HANDLE console);
 	void create_board();
+	const void display_command_info();
 	const void display_next_tetramino_board();
 	const void display_board();
 	const void goto_(int x, int y);
