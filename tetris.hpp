@@ -7,11 +7,14 @@
 #include <ctime>
 #include <string>
 #include <limits>
-#undef max // on enleve la macro max utilisée par windows.h
+#undef max // we undef the macro used by windows.h
 
 class Tetris {
 public:
 	Tetris(HANDLE console);
+	void try_force_down();
+	void check_input();
+	const bool is_game_running();
 	void create_board();
 	const void display_command_info();
 	const void display_next_tetramino_board();
@@ -19,21 +22,18 @@ public:
 	const void goto_(int x, int y);
 	void set_tetramino();
 	void get_random_index_list();
-	void set_game_settings(std::string message, int n1, int n2, int *var);
+	void set_game_settings(std::string message, int n1, int n2, int* var);
 	int move_tetramino(int dirx, int diry);
 	void get_tetramino_highest_posy();
 	void set_tetramino_highest_posy();
 	const bool check_collision(int tetramino[4][4], int dirx, int diry, int posx, int posy);
-	void try_force_down();
-	void lock_tetramino();
-	void check_input();
 	void rotate_tetramino();
 	const void erase_tetramino();
 	const void draw_tetramino();
 	const void display_next_tetramino(int number);
 	void try_break_line();
+	void lock_tetramino();
 	void move_board_down(int line);
-	const bool is_game_running();
 	const void draw_pagga_text(int position, int posx, int posy, int length);
 	const void draw_tetris_logo();
 	const void display_counter(int number, int* var, int posx_, int posy_);
