@@ -51,7 +51,7 @@ const wchar_t* score_numbers_font[3][10] = {
     L" ▄▀▄", L" ▀█ ", L" ▀▀▄", L" ▀▀█",L" █ █", L" █▀▀", L" ▄▀▀", L" ▀▀█", L" ▄▀▄", L" ▄▀▄",
     L" █ █", L"  █ ", L" ▄▀ ", L"  ▀▄",L"  ▀█", L" ▀▀▄", L" █▀▄", L" ▄▀ ", L" ▄▀▄", L"  ▀█",
     L"  ▀ ", L" ▀▀▀", L" ▀▀▀", L" ▀▀ ",L"   ▀", L" ▀▀ ", L"  ▀ ", L" ▀  ", L"  ▀ ", L" ▀▀ "
-};      
+};
 const wchar_t* ANSI_code[9] = {
     L"\033[37m  \033[0m",
     L"\033[36;1m▓▓\033[0m", // tetramino I
@@ -169,7 +169,7 @@ Tetris::Tetris(HANDLE console_) : board{ 0 }, current_tetramino{ 0 }, random_ind
     display_broken_line_counter();
     display_command_info();
 }
-const void Tetris::goto_(int x, int y) {
+void Tetris::goto_(int x, int y) {
     COORD coord;
     coord.X = x;
     coord.Y = y;
@@ -227,7 +227,7 @@ void Tetris::create_board() {
         }
     }
 }
-const void Tetris::display_next_tetramino_board() {
+void Tetris::display_next_tetramino_board() {
     goto_(next_tetra_posx + 1, next_tetra_posy - 1);
     std::cout << "\033[31mNEXT PIECE :\033[0m";
     for (int y = 0; y < 6; y++) {
@@ -243,13 +243,13 @@ const void Tetris::display_next_tetramino_board() {
         }
     }
 }
-const void Tetris::display_command_info() {
+void Tetris::display_command_info() {
     goto_(0, tetris_logo_posy + tetris_logo_heigth + board_heigth + 2);
     WriteConsole(console, L"Move with ← ↓ →   Rotate with ↑   Switch pause/playing with entry   force down with space bar   Quit with ctrl + Back", 117, NULL, NULL);
     goto_(tetris_logo_posx + 96, tetris_logo_posy);
     std::cout << "made by Megalaxatif";
 }
-const void Tetris::display_board(){
+void Tetris::display_board(){
     for (int y = 0; y < board_heigth; y++) {
         for (int x = 0; x < board_length; x++) {
             goto_(board_posx + x*2, board_posy + y);
@@ -257,7 +257,7 @@ const void Tetris::display_board(){
         }
     }
 }
-const bool Tetris::check_collision(int tetramino[4][4], int dirx, int diry, int posx_, int posy_) {
+bool Tetris::check_collision(int tetramino[4][4], int dirx, int diry, int posx_, int posy_) {
     for (int y = 0; y < 4; y++) {
         for (int x = 0; x < 4; x++) {
             if (board[posx_ + dirx + x][posy_ + diry + y] != 0 && tetramino[x][y] != 0) {
@@ -267,7 +267,7 @@ const bool Tetris::check_collision(int tetramino[4][4], int dirx, int diry, int 
     }
     return false; // no collision at the end of the loop
 }
-const void Tetris::erase_tetramino() {
+void Tetris::erase_tetramino() {
     for (int y = 0; y < 4; y++) {
         for (int x = 0; x < 4; x++) {
             if (current_tetramino[x][y] != 0) {
@@ -281,7 +281,7 @@ const void Tetris::erase_tetramino() {
         }
     }
 }
-const void Tetris::draw_tetramino() {
+void Tetris::draw_tetramino() {
     get_tetramino_highest_posy();
     for (int y = 0; y < 4; y++) {
         for (int x = 0; x < 4; x++) {
@@ -296,7 +296,7 @@ const void Tetris::draw_tetramino() {
         }
     }
 }
-const void Tetris::display_next_tetramino(int n) {
+void Tetris::display_next_tetramino(int n) {
     for (int y = 0; y < 4; y++) {
         for (int x = 0; x < 4; x++) {
             if (tetraminos[random_index_list[r_index + 1]][y][x] != 0) {
@@ -460,7 +460,7 @@ void Tetris::try_break_line() {
         else break;
     }
     if (at_least_one_line_broken) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         // we flash the line 3 times
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
@@ -469,9 +469,9 @@ void Tetris::try_break_line() {
                     std::cout << std::string(board_length * 2 - 4, ' ');
                 }
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(25));
+            std::this_thread::sleep_for(std::chrono::milliseconds(12));
             display_board();
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(25));
         }
         // we reset the line
         for (int i = 0; i < 4; i++) {
@@ -480,9 +480,9 @@ void Tetris::try_break_line() {
                     board[x][line_to_broke_list[i]] = 0;
                 }
                 display_board();
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                std::this_thread::sleep_for(std::chrono::milliseconds(50));
                 move_board_down(line_to_broke_list[i]); // we move the board down
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                //std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
         }
     }
@@ -512,10 +512,10 @@ void Tetris::set_tetramino_highest_posy(){
     draw_tetramino();
     lock_tetramino();
 }
-const bool Tetris::is_game_running() {
+bool Tetris::is_game_running() {
     return game_running;
 }
-const void Tetris::draw_pagga_text(int n, int posx, int posy, int length) {
+void Tetris::draw_pagga_text(int n, int posx, int posy, int length) {
     for (int i = 0; i < pagga_font_heigth; i++) {
         goto_(posx, posy + i);
         WriteConsole(console, pagga_text[i][n], length, NULL, NULL);
@@ -541,12 +541,12 @@ void Tetris::add_score(int score_) {
     }
     display_counter(0, &score, score_text_posx + score_text_length, score_text_posy); // update the score
 }
-const void Tetris::display_counter(int n, int *var, int counter_posx, int counter_posy) {
+void Tetris::display_counter(int n, int *var, int counter_posx, int counter_posy) {
     std::string text = std::to_string(*var);
     int num_posx = 0;
     int num_posy = 0;
     int pos = 0;
-    for (int i = 0; i < text.length(); i++) {
+    for (auto i = 0u; i < text.length(); i++) {
         for (int j = 0; j < pagga_font_heigth; j++) {
             num_posx = counter_posx + i * numbers_length;
             num_posy = counter_posy + j;
@@ -559,12 +559,12 @@ const void Tetris::display_counter(int n, int *var, int counter_posx, int counte
         }
     }
 }
-const void Tetris::display_broken_line_counter() {
+void Tetris::display_broken_line_counter() {
     std::string counter = std::to_string(broke_line);
     goto_(broke_line_counter_posx, broke_line_counter_posy);
     std::cout << "\033[31m" << "BROKEN LINE: " << counter << "\033[0m";
 }
-const void Tetris::draw_tetris_logo() {
+void Tetris::draw_tetris_logo() {
     for (int i = 0; i < tetris_logo_heigth; i++) {
         goto_(tetris_logo_posx, tetris_logo_posy + i);
         std::cout << tetris_text[i];
