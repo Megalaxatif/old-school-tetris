@@ -1,7 +1,7 @@
 ﻿#include "tetris.hpp"
 
 int main() {
-    std::cout << "\033[?25h"; // delete the cursor
+    std::cout << "\033[?25l"; // delete the cursor
     std::cout << "\033[2J\033[1;1H"; // ANSI sequence to delete the console
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     Tetris tetris(console);
