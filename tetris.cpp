@@ -357,7 +357,7 @@ void Tetris::game_over() {
     broke_line = 0;
     if (game_mode == 1) level = 1;
     goto_(broke_line_counter_posx, broke_line_counter_posy);
-    std::cout << std::string(13 + std::to_string(broke_line).length(), ' '); // 13 : length of the "BROKEN LINE: " text
+    std::cout << std::string(20, ' ');
     display_broken_line_counter();
     display_counter(0, &score, score_text_posx + score_text_length, score_text_posy); // we write
     display_counter(0, &level, level_text_posx + level_text_length, level_text_posy);
@@ -564,7 +564,7 @@ void Tetris::display_counter(int n, int *var, int counter_posx, int counter_posy
 void Tetris::display_broken_line_counter() {
     std::string counter = std::to_string(broke_line);
     goto_(broke_line_counter_posx, broke_line_counter_posy);
-    std::cout << "\033[31m" << "BROKEN LINE: " << counter << "\033[0m";
+    std::cout << "\033[31m" << "BROKEN LINES: " << counter << "\033[0m";
 }
 void Tetris::draw_tetris_logo() {
     for (int i = 0; i < tetris_logo_heigth; i++) {
