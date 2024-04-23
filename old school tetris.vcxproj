@@ -132,7 +132,15 @@
     <ClCompile Include="tetris.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="tetris.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="tetris.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ressource\tetris-premium-icon.ico" />
+    <Image Include="ressource\tetris-premium.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

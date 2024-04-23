@@ -471,9 +471,9 @@ void Tetris::try_break_line() {
                     std::cout << std::string(board_length * 2 - 4, ' ');
                 }
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(12));
+            std::this_thread::sleep_for(std::chrono::milliseconds(24));
             display_board();
-            std::this_thread::sleep_for(std::chrono::milliseconds(25));
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
         // we reset the line
         for (int i = 0; i < 4; i++) {
@@ -482,7 +482,7 @@ void Tetris::try_break_line() {
                     board[x][line_to_broke_list[i]] = 0;
                 }
                 display_board();
-                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 move_board_down(line_to_broke_list[i]); // we move the board down
                 //std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
